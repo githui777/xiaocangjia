@@ -1,0 +1,18 @@
+<div class="header">
+	<input type="text" placeholder="搜索" />
+	<img src="img/a_8_03.png" />
+</div>
+<div class="section" ng-repeat="item in three">
+	<div class="ss_img clearfix">
+		<img ng-src="{{item.img}}" alt="">
+		<div>{{item.text}}</div>
+		<i ng-class="{true: 'iconfont icon-arrow-up', false: 'iconfont icon-fanhui-copy'}[item.status]" ng-click="show($index)"></i>
+	</div>
+	<div class="ss_text" ng-show="item.status">
+		<p>黄花梨</p>
+		<p>紫檀</p>
+		<p>沉香</p>
+		<p>金丝楠</p>
+		<p>其他</p>
+	</div>
+</div>

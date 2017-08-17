@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" href="font/iconfont.css">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.bottom {
+				width: 100%;
+				height: 3rem;
+				background: white;
+				display: flex;
+				justify-content: space-around;
+				position: fixed;
+				left: 0;
+				bottom: 0;
+			}
+			
+			.bottom>li {
+				width: calc(100%3);
+			}
+			
+			.bottom>li>a {
+				width: calc(100%3);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				font-size: 0.8rem;
+			}
+			
+			.bottom>li img {
+				width: 2rem;
+			}
+		</style>
+	</head>
+
+	<body ng-controller="str1">
+		<ul class="bottom">
+			<li>
+				<a ui-sref="shouye.jingpin">
+					<img src="img/tu_03.png" />
+					<span>首页</span>
+				</a>
+			</li>
+			<li>
+				<a ui-sref="fenlei">
+					<img src="img/tu_05.png" />
+					<span>分类</span>
+				</a>
+			</li>
+			<li>
+				<a ui-sref="wo.shangcang">
+					<img src="img/tu_07.png" />
+					<span>我</span>
+				</a>
+			</li>
+		</ul>
+		<ui-view></ui-view>
+
+	</body>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-ui-router.min.js"></script>
+	<script src="js/jquery-3.1.1.js"></script>
+	<script src="js/reg.js"></script>
+	<script>
+		var app = angular.module('app', ['ui.router'])
+			.config(function($stateProvider, $urlRouterProvider) {
+
+				$urlRouterProvider.otherwise('/shouye')
+				$stateProvider
+					.state('shouye', {
+						url: "/shouye",
+						templateUrl: "./html/shouye.html",
+						controller: function($state) {
+							$state.go('shouye.jingpin');
+						}
+					})
+					.state('fenlei', {
+						url: "/fenlei",
+						templateUrl: './html/fenlei.html'
+					})
+					.state('wo', {
+						url: "/wo",
+						templateUrl: './html/wo.html',
+						controller: function($state) {
+							$state.go('wo.shangcang');
+						}
+					})
+					.state('shouye.jingpin', {
+						url: "/jingpin",
+						templateUrl: './html/jingpin.html'
+
+					})
+					.state('shouye.shoucang', {
+						url: "/shoucang",
+						templateUrl: './html/shoucang.html'
+					})
+					.state('wo.shangcang', {
+						url: "/shangcang",
+						templateUrl: './html/shangcang.html'
+					})
+					.state('wo.gonglue', {
+						url: "/gonglue",
+						templateUrl: './html/gonglue.html'
+					})
+			})
+		app.controller("str1", function($scope, $http) {
+			$http.get("data.json").then(function(data) {
+				$scope.one = data.data.dom1_a[0];
+				$scope.two = data.data.dom1_b;
+				$scope.three = data.data.dom2;
+			});
+			$scope.show = function(index) {
+				$scope.three[index].status = !$scope.three[index].status;
+			}
+		});
+	</script>
+
+</html>
